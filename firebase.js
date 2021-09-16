@@ -2,13 +2,14 @@
 import * as firebase from 'firebase'
 import 'firebase/auth'
 import 'firebase/firestore'
+import { config } from './config';
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-    apiKey: "AIzaSyDEchfSYd-58EHt2XMDvmb00pUNtlj8-M0",
+    apiKey: config.API_KEY,
     authDomain: "chatapptest-e8ef1.firebaseapp.com",
     databaseURL: "https://chatapptest-e8ef1.firebaseio.com",
     projectId: "chatapptest-e8ef1",
