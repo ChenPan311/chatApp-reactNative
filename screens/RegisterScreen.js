@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { View, StyleSheet } from 'react-native'
 import { Input, Button } from 'react-native-elements';
-import { auth } from '../firebase';
+import { auth, db } from '../firebase';
 
 const RegisterScreen = ({ navigation }) => {
     const [email, setEmail] = useState("");
@@ -17,6 +17,17 @@ const RegisterScreen = ({ navigation }) => {
                     displayName: name,
                     photoURL: imageURL ? imageURL : "https://www.minervastrategies.com/wp-content/uploads/2016/03/default-avatar.jpg"
                 }).then(() => {
+                    db.collection("Users").doc(`${user.email}`).set({
+                        _id: user.email,
+                        avatar: user.photoURL,
+                        name: user.displayName
+                    })
+                        .then(() => {
+                            console.log("Document successfully written!");
+                        })
+                        .catch((error) => {
+                            console.error("Error writing document: ", error);
+                        });
                     //update successful
                     alert('Register Successful');
                 }).catch(() => {

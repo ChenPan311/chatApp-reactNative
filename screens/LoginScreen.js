@@ -16,7 +16,7 @@ const LoginScreen = ({ navigation }) => {
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged((user) => {
             if (user) {
-                navigation.replace('Chat');
+                navigation.replace('Users');
             } else {
             }
         });
@@ -25,7 +25,6 @@ const LoginScreen = ({ navigation }) => {
     return (
         <View style={styles.container}>
             <Input
-                style={styles.input}
                 placeholder="Enter Email"
                 label="Email"
                 leftIcon={{ type: 'material', name: 'email' }}

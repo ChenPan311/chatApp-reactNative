@@ -4,6 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import LoginScreen from './screens/LoginScreen';
 import RegisterScreen from './screens/RegisterScreen';
 import ChatsScreen from './screens/ChatsScreen';
+import UsersScreen from './screens/UsersScreen';
 
 const Stack = createStackNavigator();
 export default function App() {
@@ -12,6 +13,7 @@ export default function App() {
       <Stack.Navigator>
         <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="Register" component={RegisterScreen} />
+        <Stack.Screen name="Users" component={UsersScreen} />
         <Stack.Screen name="Chat" component={ChatsScreen} />
       </Stack.Navigator>
     </NavigationContainer>
