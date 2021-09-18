@@ -1,15 +1,19 @@
 import React, { useState, useEffect } from 'react'
-import { View, StyleSheet } from 'react-native'
+import { View, StyleSheet, ActivityIndicator } from 'react-native'
 import { Input, Button } from 'react-native-elements';
 import { auth } from '../firebase';
 
 const LoginScreen = ({ navigation }) => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [loading, setLoading] = useState(false);
     const signIn = () => {
+        setLoading(true);
         auth.signInWithEmailAndPassword(email, password)
+            .then(() => setLoading(false))
             .catch((error) => {
                 var errorMessage = error.message;
+                setLoading(false);
                 alert(errorMessage);
             });
     }
@@ -38,6 +42,12 @@ const LoginScreen = ({ navigation }) => {
                 value={password}
                 onChangeText={text => setPassword(text)}
                 secureTextEntry />
+
+            <ActivityIndicator
+                size="large"
+                color="#2a9d8f"
+                animating={loading}
+            />
 
             <Button title="Sign In" buttonStyle={styles.button}
                 onPress={signIn} />
