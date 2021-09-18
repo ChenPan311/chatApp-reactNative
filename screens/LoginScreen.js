@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { View, StyleSheet, ActivityIndicator } from 'react-native'
 import { Input, Button } from 'react-native-elements';
-import { auth } from '../firebase';
+import { auth, db } from '../firebase';
 
 const LoginScreen = ({ navigation }) => {
     const [email, setEmail] = useState("");
@@ -17,11 +17,16 @@ const LoginScreen = ({ navigation }) => {
                 alert(errorMessage);
             });
     }
+
+    const updateOnline = (user) => {
+        db.collection("Users").doc(user.email).update({ online: true })
+            .catch((error) => console.error("Error updating document: ", error));
+    }
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged((user) => {
             if (user) {
+                updateOnline(user, true);
                 navigation.replace('Users');
-            } else {
             }
         });
         return unsubscribe;

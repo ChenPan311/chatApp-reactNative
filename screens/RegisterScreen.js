@@ -20,14 +20,11 @@ const RegisterScreen = ({ navigation }) => {
                     db.collection("Users").doc(`${user.email}`).set({
                         _id: user.email,
                         avatar: user.photoURL,
-                        name: user.displayName
-                    })
-                        .then(() => {
-                            console.log("Document successfully written!");
-                        })
-                        .catch((error) => {
-                            console.error("Error writing document: ", error);
-                        });
+                        name: user.displayName,
+                        online: false
+                    }).catch((error) => {
+                        console.error("Error writing document: ", error);
+                    });
                     //update successful
                     alert('Register Successful');
                 }).catch(() => {

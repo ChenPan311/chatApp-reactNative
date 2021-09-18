@@ -1,5 +1,5 @@
 import React, { useLayoutEffect, useEffect, useState, useCallback } from 'react'
-import { View, FlatList, StyleSheet } from 'react-native'
+import { View, FlatList, StyleSheet, Text } from 'react-native'
 import { Avatar, ListItem, useTheme } from 'react-native-elements';
 import { AntDesign } from '@expo/vector-icons';
 import { TouchableOpacity } from 'react-native-gesture-handler';
@@ -15,6 +15,7 @@ const Item = ({ item, onPress }) => {
                 <ListItem.Content>
                     <ListItem.Title>{item.name}</ListItem.Title>
                 </ListItem.Content>
+                <View style={item.online ? styles.greendot : styles.reddot}></View>
             </ListItem>
         </TouchableOpacity>
     );
@@ -38,6 +39,7 @@ const UsersScreen = ({ navigation }) => {
     }
 
     const signOut = () => {
+        db.collection("Users").doc(auth?.currentUser?.email).update({ online: false });
         auth.signOut().then(() => {
             // Sign-out successful.
             navigation.replace("Login");
@@ -69,6 +71,7 @@ const UsersScreen = ({ navigation }) => {
                     _id: doc.data()._id,
                     name: doc.data().name,
                     avatar: doc.data().avatar,
+                    online: doc.data().online
                 }))
             ))
     }, []);
@@ -83,3 +86,18 @@ const UsersScreen = ({ navigation }) => {
 };
 
 export default UsersScreen
+
+const styles = StyleSheet.create({
+    reddot: {
+        width: 16,
+        height: 16,
+        borderRadius: 16 / 2,
+        backgroundColor: "red",
+    },
+    greendot: {
+        width: 16,
+        height: 16,
+        borderRadius: 16 / 2,
+        backgroundColor: "green",
+    }
+})
