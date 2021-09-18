@@ -63,19 +63,15 @@ const UsersScreen = ({ navigation }) => {
                 </TouchableOpacity>
             )
         })
-    }, []);
-
-    useLayoutEffect(() => {
-        const unsubscribe = db.collection('Users')
+        db.collection('Users')
             .onSnapshot(snapshot => setUsers(
-                snapshot.docs.map(doc => ({
+                snapshot.docs.filter(doc => doc.data()._id !== auth?.currentUser?.email).map(doc => ({
                     _id: doc.data()._id,
                     name: doc.data().name,
                     avatar: doc.data().avatar,
                 }))
             ))
-        return unsubscribe;
-    }, [])
+    }, []);
 
     return (
         <FlatList
