@@ -17,6 +17,7 @@ const ChatsScreen = ({ route, navigation }) => {
     const chatRef = db.collection("Chats").where(user1, "==", true)
         .where(user2, "==", true);
 
+    //Reading all messages with user
     useLayoutEffect(() => {
         chatRef.get()
             .then((querySnapshot) => {
@@ -44,36 +45,22 @@ const ChatsScreen = ({ route, navigation }) => {
 
     const onSend = useCallback((messages = []) => {
         setMessages(previousMessages => GiftedChat.append(previousMessages, messages))
-        const {
+        const { _id, text, createdAt, user } = messages[0];
+        if (chatId === "") { // if it is the first message
+            var ref = db.collection("Chats").doc();
+            chatId = ref.id;
+            db.collection("Chats").doc(chatId).set({
+                [user1]: true,
+                [user2]: true,
+            });
+        }
+        db.collection(`Chats/${chatId}/messages`).add({
             _id,
             text,
             createdAt,
             user
-        } = messages[0];
-        if (chatId === "") {
-            console.log("Not Exist")
-            var ref = db.collection("Chats").doc().set({
-                [user1]: true,
-                [user2]: true,
-            }).then(() => {
-                chatId = ref.key;
-            }).then(() => {
-                db.collection(`Chats/${chatId}/messages`).add({
-                    _id,
-                    text,
-                    createdAt,
-                    user
-                });
-            });
-        } else {
-            db.collection("Chats").doc(chatId).collection('messages').add({
-                _id,
-                text,
-                createdAt,
-                user
-            });
-        }
-    }, [])
+        });
+    }, []);
 
     const goBack = () => {
         navigation.goBack();
@@ -83,21 +70,17 @@ const ChatsScreen = ({ route, navigation }) => {
         navigation.setOptions({
             title: 'Chat With ' + User.name,
             headerLeft: () => (
-                <View style={{
-                    marginLeft: 20
-                }}>
+                <View style={{ marginLeft: 20 }}>
                     <Avatar rounded source={{ uri: User.avatar }} />
                 </View>
             ),
             headerRight: () => (
-                <TouchableOpacity style={{
-                    marginRight: 20
-                }} onPress={goBack}>
+                <TouchableOpacity style={{ marginRight: 20 }} onPress={goBack}>
                     <AntDesign name="arrowleft" size={24} color="black" />
                 </TouchableOpacity>
             )
         })
-    }, [])
+    }, []);
 
     return (
         <GiftedChat
