@@ -63,7 +63,7 @@ const UsersScreen = ({ navigation }) => {
                 </TouchableOpacity>
             )
         });
-        const unsubscribe = db.collection('Users')
+        var unsubscribe = db.collection('Users')
             .onSnapshot(snapshot => setUsers(
                 snapshot.docs.filter(doc => doc.data()._id !== auth?.currentUser?.email).map(doc => ({
                     _id: doc.data()._id,
@@ -72,7 +72,7 @@ const UsersScreen = ({ navigation }) => {
                     online: doc.data().online
                 }))
             ))
-        return unsubscribe;
+        return () => unsubscribe;
     }, []);
 
     return (

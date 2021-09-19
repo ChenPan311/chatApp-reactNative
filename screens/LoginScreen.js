@@ -30,7 +30,7 @@ const LoginScreen = ({ navigation }) => {
                 navigation.replace('Users');
             }
         });
-        return unsubscribe;
+        return () => unsubscribe;
     }, [])
     return (
         <View style={styles.container}>

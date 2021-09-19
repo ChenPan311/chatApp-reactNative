@@ -1,5 +1,5 @@
 import React, { useLayoutEffect, useEffect, useState, useCallback } from 'react'
-import { View } from 'react-native'
+import { View, BackHandler } from 'react-native'
 import { auth, db } from '../firebase'
 import { AntDesign } from '@expo/vector-icons';
 import { TouchableOpacity } from 'react-native-gesture-handler';
@@ -24,7 +24,7 @@ const ChatsScreen = ({ route, navigation }) => {
                 querySnapshot.forEach((doc) => {
                     // doc.data() is never undefined for query doc snapshots
                     chatId = doc.id;
-                    db.collection("Chats").doc(chatId).collection('messages').orderBy('createdAt', 'desc')
+                    var unsubscribe = db.collection("Chats").doc(chatId).collection('messages').orderBy('createdAt', 'desc')
                         .onSnapshot(snapshot => {
                             if (snapshot) {
                                 setMessages(
@@ -39,9 +39,10 @@ const ChatsScreen = ({ route, navigation }) => {
                                 console.log("In Snapshot not Exist");
                             }
                         })
+                    return () => unsubscribe;
                 });
             })
-    }, [setMessages])
+    }, [])
 
     const onSend = useCallback((messages = []) => {
         setMessages(previousMessages => GiftedChat.append(previousMessages, messages))
