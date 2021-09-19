@@ -1,6 +1,6 @@
 import React, { useLayoutEffect, useEffect, useState, useCallback } from 'react'
 import { View, FlatList, StyleSheet, Text } from 'react-native'
-import { Avatar, ListItem, useTheme } from 'react-native-elements';
+import { Avatar, ListItem } from 'react-native-elements';
 import { AntDesign } from '@expo/vector-icons';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { auth, db } from '../firebase'
@@ -9,9 +9,7 @@ const Item = ({ item, onPress }) => {
     return (
         <TouchableOpacity onPress={onPress}>
             <ListItem>
-                <Avatar rounded
-                    source={{ uri: item.avatar }}
-                />
+                <Avatar rounded source={{ uri: item.avatar }} />
                 <ListItem.Content>
                     <ListItem.Title>{item.name}</ListItem.Title>
                 </ListItem.Content>
@@ -64,8 +62,8 @@ const UsersScreen = ({ navigation }) => {
                     <AntDesign name="logout" size={24} color="black" />
                 </TouchableOpacity>
             )
-        })
-        db.collection('Users')
+        });
+        const unsubscribe = db.collection('Users')
             .onSnapshot(snapshot => setUsers(
                 snapshot.docs.filter(doc => doc.data()._id !== auth?.currentUser?.email).map(doc => ({
                     _id: doc.data()._id,
@@ -74,6 +72,7 @@ const UsersScreen = ({ navigation }) => {
                     online: doc.data().online
                 }))
             ))
+        return unsubscribe;
     }, []);
 
     return (
@@ -92,12 +91,12 @@ const styles = StyleSheet.create({
         width: 16,
         height: 16,
         borderRadius: 16 / 2,
-        backgroundColor: "red",
+        backgroundColor: "#ef476f",
     },
     greendot: {
         width: 16,
         height: 16,
         borderRadius: 16 / 2,
-        backgroundColor: "green",
+        backgroundColor: "#06d6a0",
     }
 })

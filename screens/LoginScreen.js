@@ -22,10 +22,11 @@ const LoginScreen = ({ navigation }) => {
         db.collection("Users").doc(user.email).update({ online: true })
             .catch((error) => console.error("Error updating document: ", error));
     }
+
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged((user) => {
             if (user) {
-                updateOnline(user, true);
+                updateOnline(user);
                 navigation.replace('Users');
             }
         });

@@ -8,6 +8,7 @@ const RegisterScreen = ({ navigation }) => {
     const [name, setName] = useState("");
     const [password, setPassword] = useState("");
     const [imageURL, setimageURL] = useState("");
+
     const register = () => {
         auth.createUserWithEmailAndPassword(email, password)
             .then((userCredential) => {
@@ -21,7 +22,7 @@ const RegisterScreen = ({ navigation }) => {
                         _id: user.email,
                         avatar: user.photoURL,
                         name: user.displayName,
-                        online: false
+                        online: true
                     }).catch((error) => {
                         console.error("Error writing document: ", error);
                     });
