@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { View, StyleSheet, ActivityIndicator } from 'react-native'
+import { View, StyleSheet, ActivityIndicator, ImageBackground } from 'react-native'
 import { Input, Button } from 'react-native-elements';
 import { auth, db } from '../firebase';
 
@@ -33,35 +33,37 @@ const LoginScreen = ({ navigation }) => {
         return () => unsubscribe;
     }, [])
     return (
-        <View style={styles.container}>
-            <Input
-                placeholder="Enter Email"
-                label="Email"
-                leftIcon={{ type: 'material', name: 'email' }}
-                value={email}
-                onChangeText={text => setEmail(text)} />
+        <ImageBackground source={require('../assets/background.png')} style={{ flex: 1 }} resizeMode="cover">
+            <View style={styles.container}>
+                <Input
+                    placeholder="Enter Email"
+                    label="Email"
+                    leftIcon={{ type: 'material', name: 'email' }}
+                    value={email}
+                    onChangeText={text => setEmail(text)} />
 
-            <Input
-                placeholder="Enter Password"
-                label="Password"
-                leftIcon={{ type: 'material', name: 'lock' }}
-                value={password}
-                onChangeText={text => setPassword(text)}
-                secureTextEntry />
+                <Input
+                    placeholder="Enter Password"
+                    label="Password"
+                    leftIcon={{ type: 'material', name: 'lock' }}
+                    value={password}
+                    onChangeText={text => setPassword(text)}
+                    secureTextEntry />
 
-            <ActivityIndicator
-                size="large"
-                color="#2a9d8f"
-                animating={loading}
-            />
+                <ActivityIndicator
+                    size="large"
+                    color="#2a9d8f"
+                    animating={loading}
+                />
 
-            <Button title="Sign In" buttonStyle={styles.button}
-                onPress={signIn} />
+                <Button title="Sign In" buttonStyle={styles.button}
+                    onPress={signIn} />
 
-            <Button title="Register" buttonStyle={styles.button}
-                onPress={() => navigation.navigate('Register')} />
+                <Button title="Register" buttonStyle={styles.button}
+                    onPress={() => navigation.navigate('Register')} />
 
-        </View>
+            </View>
+        </ImageBackground>
     )
 }
 
@@ -70,12 +72,14 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         alignItems: 'center',
-        padding: 15,
+        padding: 15
     },
     button: {
         width: 200,
         marginTop: 10,
         borderRadius: 10,
-        backgroundColor: '#2a9d8f'
+        borderWidth: 1,
+        borderColor: 'white',
+        backgroundColor: '#2a9d8f',
     },
 });

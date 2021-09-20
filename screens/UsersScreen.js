@@ -7,8 +7,8 @@ import { auth, db } from '../firebase'
 
 const Item = ({ item, onPress }) => {
     return (
-        <TouchableOpacity onPress={onPress}>
-            <ListItem>
+        <TouchableOpacity onPress={onPress} style={{ padding: 5 }}>
+            <ListItem bottomDivider>
                 <Avatar rounded source={{ uri: item.avatar }} />
                 <ListItem.Content>
                     <ListItem.Title>{item.name}</ListItem.Title>

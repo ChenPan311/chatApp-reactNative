@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { View, StyleSheet } from 'react-native'
+import { View, StyleSheet, ImageBackground } from 'react-native'
 import { Input, Button } from 'react-native-elements';
 import { auth, db } from '../firebase';
 
@@ -40,39 +40,41 @@ const RegisterScreen = ({ navigation }) => {
     }
 
     return (
-        <View style={styles.container}>
-            <Input
-                placeholder="Enter Name"
-                label="Name"
-                leftIcon={{ type: 'material', name: 'badge' }}
-                value={name}
-                onChangeText={text => setName(text)} />
+        <ImageBackground source={require('../assets/background.png')} style={{ flex: 1 }} resizeMode="cover">
+            <View style={styles.container}>
+                <Input
+                    placeholder="Enter Name"
+                    label="Name"
+                    leftIcon={{ type: 'material', name: 'badge' }}
+                    value={name}
+                    onChangeText={text => setName(text)} />
 
-            <Input
-                placeholder="Enter Email"
-                label="Email"
-                leftIcon={{ type: 'material', name: 'email' }}
-                value={email}
-                onChangeText={text => setEmail(text)} />
+                <Input
+                    placeholder="Enter Email"
+                    label="Email"
+                    leftIcon={{ type: 'material', name: 'email' }}
+                    value={email}
+                    onChangeText={text => setEmail(text)} />
 
-            <Input
-                placeholder="Enter Password"
-                label="Password"
-                leftIcon={{ type: 'material', name: 'lock' }}
-                value={password}
-                onChangeText={text => setPassword(text)}
-                secureTextEntry />
+                <Input
+                    placeholder="Enter Password"
+                    label="Password"
+                    leftIcon={{ type: 'material', name: 'lock' }}
+                    value={password}
+                    onChangeText={text => setPassword(text)}
+                    secureTextEntry />
 
-            <Input
-                placeholder="Enter Image URL"
-                label="Image Url"
-                leftIcon={{ type: 'material', name: 'face' }}
-                value={imageURL}
-                onChangeText={text => setimageURL(text)} />
+                <Input
+                    placeholder="Enter Image URL"
+                    label="Image Url"
+                    leftIcon={{ type: 'material', name: 'face' }}
+                    value={imageURL}
+                    onChangeText={text => setimageURL(text)} />
 
-            <Button title="Register" buttonStyle={styles.button} onPress={register} />
+                <Button title="Register" buttonStyle={styles.button} onPress={register} />
 
-        </View>
+            </View>
+        </ImageBackground>
     )
 }
 
@@ -85,8 +87,10 @@ const styles = StyleSheet.create({
     },
     button: {
         width: 200,
-        marginTop: 10,
+        marginTop: 30,
         borderRadius: 10,
+        borderWidth: 1,
+        borderColor: 'white',
         backgroundColor: '#2a9d8f'
     }
 });
